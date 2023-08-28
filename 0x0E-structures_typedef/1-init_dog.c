@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "dog.h"
+
 /**
  * init_dog - initialize struct dog `d' with `name', `age', and `owner'
  * @d: pointer to struct dog type
@@ -7,7 +8,6 @@
  * @age: age to initialize `d' to
  * @owner: owner to initialize `d' to
  */
-
 void init_dog(struct dog *d, char *name, float age, char *owner) 
 {
 	if (d == NULL)

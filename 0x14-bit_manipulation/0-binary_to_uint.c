@@ -10,8 +10,8 @@
  */
 unsigned int binary_to_uint(const char *b)
 {
-    if (b == NULL) {
-        return 0; // Return 0 for NULL input
+    if (!b) {
+        return (0);
     }
 
     unsigned int decimal_value = 0;
@@ -25,9 +25,9 @@ unsigned int binary_to_uint(const char *b)
         } else if (current_char == '1') {
             decimal_value = decimal_value * 2 + 1;
         } else {
-            return 0; // Return 0 if a non-binary character is encountered
+            return (0); // Return 0 if a non-binary character is encountered
         }
     }
 
-    return decimal_value;
+    return (decimal_value);
 }

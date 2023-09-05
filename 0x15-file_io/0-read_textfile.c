@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 /**
  * read_textfile - read a text file and print to STDOUT.

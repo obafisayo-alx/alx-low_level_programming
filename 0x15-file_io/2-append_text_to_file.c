@@ -14,24 +14,31 @@
  */
 int append_text_to_file(const char *filename, char *text_content)
 {
-	int fd, i;
-    
+	int fd;
+	size_t i;
+	ssize_t bytes_to_write;
+
 	if (filename == NULL)
 		return (-1);
 
-    fd = open(fd, O_APPEND | O_WRONLY);
+    fd = open(filename, O_APPEND | O_WRONLY);
     if (fd == -1)  
         return (-1);
 
     for ( i = 0; text_content && text_content[i]; i++)
         ;
     
-    if (write(fd, text_content, i) != i)
+    if (text_content == NULL)
     {
         close(fd);
         return (-1);
-    }
+    }  else 
+        bytes_to_write = write(fd, text_content, i);
 
     close(fd);
+    if (bytes_to_write == -1)
+        return (-1);
+
     return (1);
+
 } 

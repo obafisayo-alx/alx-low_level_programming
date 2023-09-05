@@ -14,13 +14,13 @@
 int create_file(const char *filename, char *text_content)
 {
 	int fd;
-	size_t length_of_text;
+	size_t l;
 	ssize_t bytes_to_write;
 
 	if (filename == NULL)
 		return (-1);
 
-	for (length_of_text = 0; text_content && text_content[length_of_text]; length_of_text++)
+	for (l = 0; text_content && text_content[l]; l++)
 		;
 
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
@@ -30,7 +30,7 @@ int create_file(const char *filename, char *text_content)
 	if (text_content == NULL)
 		text_content = "";
 
-	bytes_to_write = write(fd, text_content, length_of_text);
+	bytes_to_write = write(fd, text_content, l);
 	close(fd);
 	if (bytes_to_write == -1)
 		return (-1);

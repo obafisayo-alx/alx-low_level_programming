@@ -45,6 +45,7 @@ int main(int ac, char **av)
 {
 	int fd_from, fd_to, bytes_r, bytes_w;
 	char *buffer[BUFFER_SIZE];
+    mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
 	if (ac != 3)
 	{
@@ -59,7 +60,7 @@ int main(int ac, char **av)
     fd_from = open(av[1], O_RDONLY);
 	if (fd_from == -1)
 		file_from_fail(fd_from);
-	fd_to = open(av[2], O_TRUNC | O_CREAT | O_WRONLY, 0664);
+	fd_to = open(av[2], O_TRUNC | O_CREAT | O_WRONLY, mode);
 	if (fd_to == -1)
 		file_to_fail(fd_to);
     bytes_r = read(fd_from, buffer, BUFFER_SIZE);

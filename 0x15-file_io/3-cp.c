@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 {
 	int file1, file2, file1rd, file2wr, closed;
 	char buffer[BUFFER_SIZE];
+	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
 	if (argc != 3)
 	{
@@ -58,7 +59,7 @@ int main(int argc, char *argv[])
 	file1 = open(argv[1], O_RDONLY);
 	if (file1 == -1)
 		file1fail(argv[1]);
-	file2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	file2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, mode);
 	if (file2 == -1)
 		file2fail(argv[2]);
 	file1rd = read(file1, buffer, BUFFER_SIZE);

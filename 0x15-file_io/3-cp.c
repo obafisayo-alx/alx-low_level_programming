@@ -1,83 +1,84 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include "main.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
 
 /**
- * file_from_fail - Print error message if can't read file
+ * file1fail - Print error message if can't read file
  * @file: Name of the file that can't be read
  */
-void file_from_fail(char *file)
+void file1fail(char *file)
 {
-    dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
+	dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file);
 	exit(98);
 }
 
 /**
- * file_to_fail - Print error message if can't read file
- * @file: Name of the file that can't be read
+ * file2fail - Print error message if can't write to file
+ * @file: Name of the file that can't be write to
  */
-void file_to_fail(char *file)
+void file2fail(char *file)
 {
-    dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
+	dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
 	exit(99);
 }
 
 /**
- * writeError - Print error message if file can't close
- * @file: Name of the file that can't be read
+ * closefail - Print error message if file can't close
+ * @fd: File descriptor of the file
  */
-void write_error(char *fd_from)
+void closefail(int fd)
 {
-	dprintf(STDERR_FILENO, "Error: Can't close fd %s\n", fd_from);
+	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
 	exit(100);
 }
 
 /**
   * main - copy the content of one file to another
-  * @ac: Number of arguments received
-  * @av: Array of arguments received
+  * @argc: Number of arguments received
+  * @argv: Array of arguments received
   *
   * Return: 0 on success
   */
-int main(int ac, char **av)
+int main(int argc, char *argv[])
 {
-	int fd_from, fd_to, bytes_r, bytes_w;
-	char *buffer[BUFFER_SIZE];
-    mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
+	int file1, file2, file1rd, file2wr, closed;
+	char buffer[BUFFER_SIZE];
+	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
-	if (ac != 3)
+	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-
-    if (av[1] == NULL)
-        file_from_fail(av[1]);
-    if (av[2] == NULL)
-        file_to_fail(av[2]);
-    fd_from = open(av[1], O_RDONLY);
-	if (fd_from == -1)
-		file_from_fail(fd_from);
-	fd_to = open(av[2], O_TRUNC | O_CREAT | O_WRONLY, mode);
-	if (fd_to == -1)
-		file_to_fail(fd_to);
-    bytes_r = read(fd_from, buffer, BUFFER_SIZE);
-    if (bytes_r == -1)
-        file_from_fail(av[1]);
-	while ((bytes_r > 0))
+	if (argv[1] == NULL)
+		file1fail(argv[1]);
+	if (argv[2] == NULL)
+		file2fail(argv[2]);
+	file1 = open(argv[1], O_RDONLY);
+	if (file1 == -1)
+		file1fail(argv[1]);
+	file2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, mode);
+	if (file2 == -1)
+		file2fail(argv[2]);
+	file1rd = read(file1, buffer, BUFFER_SIZE);
+	if (file1rd == -1)
+		file1fail(argv[1]);
+	while (file1rd > 0)
 	{
-		bytes_w = write(fd_to, buffer, bytes_r);
-		if (bytes_w != bytes_r)
-			file_to_fail(av[2]);
-        bytes_r = read(fd_from, buffer, BUFFER_SIZE);
-        if (bytes_r == -1)
-            file_from_fail(av[1]);
+		file2wr = write(file2, buffer, file1rd);
+		if (file2wr != file1rd)
+			file2fail(argv[2]);
+		file1rd = read(file1, buffer, BUFFER_SIZE);
+		if (file1rd == -1)
+			file1fail(argv[1]);
 	}
-	if (close(fd_from) == -1)
-        write_error(fd_from);
-	if (close(fd_to) == -1)
-        write_error(fd_to);
+	closed = close(file1);
+	if (closed == -1)
+		closefail(file1);
+	closed = close(file2);
+	if (closed == -1)
+		closefail(file2);
 	return (0);
 }

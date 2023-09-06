@@ -20,7 +20,7 @@ int main(int ac, char **av)
 	char *file_from = av[1];
 	char *file_to = av[2];
 	int fd_from, fd_to;
-    
+
 	openfiles(file_from, file_to, &fd_from, &fd_to);
 	writefiles(file_from, file_to, fd_from, fd_to);
 	close(fd_from);
@@ -63,8 +63,8 @@ void openfiles(char *file_from, char *file_to, int *fd_from, int *fd_to)
 void writefiles(char *file_from, char *file_to, int *fd_from, int *fd_to)
 {
 	ssize_t bytes_r, bytes_w;
-
 	char *buffer[BUFFER_SIZE];
+
 	while ((bytes_r = read(file_from, buffer, sizeof(buffer)) > 0))
 	{
 		bytes_w = write(file_to, buffer, bytes_r);

@@ -44,7 +44,7 @@ void closefail(int fd)
 int main(int argc, char *argv[])
 {
 	int file1, file2, file1rd, file2wr, closed;
-	char buffer[BUFFER_SIZE];
+	char buffer[BUFSIZE];
 	mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
 	if (argc != 3)
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 	file2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, mode);
 	if (file2 == -1)
 		file2fail(argv[2]);
-	file1rd = read(file1, buffer, BUFFER_SIZE);
+	file1rd = read(file1, buffer, BUFSIZE);
 	if (file1rd == -1)
 		file1fail(argv[1]);
 	while (file1rd > 0)
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 		file2wr = write(file2, buffer, file1rd);
 		if (file2wr != file1rd)
 			file2fail(argv[2]);
-		file1rd = read(file1, buffer, BUFFER_SIZE);
+		file1rd = read(file1, buffer, BUFSIZE);
 		if (file1rd == -1)
 			file1fail(argv[1]);
 	}

@@ -51,30 +51,28 @@ int main(int ac, char **av)
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-	char *file_from = av[1];
-	char *file_to = av[2];
 
-    if (file_from == NULL)
-        file_from_fail(file_from);
-    if (file_to == NULL)
-        file_to_fail(file_to);
-    fd_from = open(file_from, O_RDONLY);
+    if (av[1] == NULL)
+        file_from_fail(av[1]);
+    if (av[2] == NULL)
+        file_to_fail(av[2]);
+    fd_from = open(av[1], O_RDONLY);
 	if (fd_from == -1)
 		file_from_fail(fd_from);
-	fd_to = open(file_to, O_TRUNC | O_CREAT | O_WRONLY, 0664);
+	fd_to = open(av[2], O_TRUNC | O_CREAT | O_WRONLY, 0664);
 	if (fd_to == -1)
 		file_to_fail(fd_to);
     bytes_r = read(fd_from, buffer, BUFFER_SIZE);
     if (bytes_r == -1)
-        file_from_fail(file_from);
+        file_from_fail(av[1]);
 	while ((bytes_r > 0))
 	{
 		bytes_w = write(fd_to, buffer, bytes_r);
 		if (bytes_w != bytes_r)
-			file_to_fail(file_to);
+			file_to_fail(av[2]);
         bytes_r = read(fd_from, buffer, BUFFER_SIZE);
         if (bytes_r == -1)
-            file_from_fail(file_from);
+            file_from_fail(av[1]);
 	}
 	if (close(fd_from) == -1)
         write_error(fd_from);

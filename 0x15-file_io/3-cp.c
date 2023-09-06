@@ -66,17 +66,17 @@ void writefiles(int *fd_from, int *fd_to)
 		bytes_w = write(fd_to, buffer, bytes_r);
 		if (bytes_w == -1)
 		{
-            dprintf(STDERR_FILENO, "Error: Can't write to file descriptor %d\n", fd_to);
+			dprintf(STDERR_FILENO, "Error: Can't write to file descriptor %d\n", fd_to);
 			close(fd_from);
 			close(fd_to);
-            exit(99);
+			exit(99);
 		}
 	}
 	if (bytes_r == -1)
 	{
 		close(fd_from);
-        dprintf(STDERR_FILENO, "Error: Can't read from file descriptor %d\n", fd_from);
+		dprintf(STDERR_FILENO, "Error: Can't read from file descriptor %d\n", fd_from);
 		close(fd_to);
-        exit(98);
+		exit(98);
 	}
 }

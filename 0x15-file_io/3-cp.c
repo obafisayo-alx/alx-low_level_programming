@@ -28,7 +28,7 @@ void file_to_fail(char *file)
  * writeError - Print error message if file can't close
  * @file: Name of the file that can't be read
  */
-void writeError(char *fd_from)
+void write_error(char *fd_from)
 {
 	dprintf(STDERR_FILENO, "Error: Can't close fd %s\n", fd_from);
 	exit(100);
@@ -43,6 +43,9 @@ void writeError(char *fd_from)
   */
 int main(int ac, char **av)
 {
+	int fd_from, fd_to, bytes_r, bytes_w;
+	char *buffer[BUFFER_SIZE];
+
 	if (ac != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
@@ -50,9 +53,6 @@ int main(int ac, char **av)
 	}
 	char *file_from = av[1];
 	char *file_to = av[2];
-	int fd_from, fd_to;
-    ssize_t bytes_r, bytes_w;
-	char *buffer[BUFFER_SIZE];
 
     if (file_from == NULL)
         file_from_fail(file_from);
@@ -77,8 +77,8 @@ int main(int ac, char **av)
             file_from_fail(file_from);
 	}
 	if (close(fd_from) == -1)
-        writeError(fd_from);
+        write_error(fd_from);
 	if (close(fd_to) == -1)
-        writeError(fd_to);
+        write_error(fd_to);
 	return (0);
 }

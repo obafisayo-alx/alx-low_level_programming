@@ -50,11 +50,11 @@ int elf_file(const char *filename)
 {
     ssize_t byt_r;
     char magic_bytes[4];
+    off_t origin_post;
+
     int fd = open(filename, O_RDONLY);
     if (fd == -1)
         print_err(filename);
-    off_t origin_post;
-
     origin_post = lseek(fd, 0, SEEK_CUR);
     if (origin_post == -1)
     {
@@ -90,11 +90,12 @@ void read_elf_file(const char *filename)
 {
     int i;
     Elf64_Ehdr elf_header;
+    ssize_t byt_r;
 
     int fd = open(filename, O_RDONLY);
     if (fd == -1)
         print_err(filename);
-    ssize_t byt_r = read(fd, &elf_header, sizeof(elf_header));
+    byt_r = read(fd, &elf_header, sizeof(elf_header));
     if (byt_r != sizeof(elf_header))
     {
         close(fd);

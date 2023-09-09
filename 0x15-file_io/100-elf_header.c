@@ -119,7 +119,7 @@ void read_elf_file(const char *filename)
     elf_osabi(elf_header.e_ident);
     printf("%-34s %u\n  ", "ABI Version:", elf_header.e_ident[EI_ABIVERSION]);
     printf("%-34s %s\n  ", "Type:", get_elf_type_string(elf_header.e_type));
-    printf("%-34s 0x%04lx\n  ","Entry point address:", (unsigned long)elf_header.e_entry & 0xFFFFFFFFUL);
+    printf("%-34s 0x%lx\n  ","Entry point address:", (unsigned long)elf_header.e_entry & 0xFFFFFFFFUL);
     close(fd);
 }
 

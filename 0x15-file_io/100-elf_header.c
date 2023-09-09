@@ -101,12 +101,12 @@ void read_elf_file(const char *filename)
         close(fd);
         print_err(filename);
     }
-    if (elf_header.e_ident[EI_CLASS] != ELFCLASS64)
-    {
-        printf("Not a 64-bit ELF file\n");
-        close(fd);
-        return;
-    }
+    // if (elf_header.e_ident[EI_CLASS] != ELFCLASS64)
+    // {
+    //     printf("Not a 64-bit ELF file\n");
+    //     close(fd);
+    //     return;
+    // }
     printf("Magic:");
     for (i = 0; i < EI_NIDENT; i++)
     {

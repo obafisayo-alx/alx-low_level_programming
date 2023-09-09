@@ -10,6 +10,7 @@
 int elf_file(const char *filename);
 void read_elf_file(const char *filename);
 void elf_osabi(const unsigned char *buffer);
+const char* get_elf_type_string(unsigned int type);
 
 /**
  * print_err - This function is used to print an error message
@@ -113,10 +114,15 @@ void read_elf_file(const char *filename)
     printf("%-34s %d (current)\n  ","Version:", elf_header.e_ident[EI_VERSION]);
     elf_osabi(elf_header.e_ident);
     printf("%-34s %u\n  ", "ABI Version:", elf_header.e_ident[EI_ABIVERSION]);
-    printf("%-34s %d\n  ", "Type:", elf_header.e_type);
+    printf("%-34s %s\n  ", "Type:", get_elf_type_string(elf_header.e_type));
     printf("%-34s 0x%08lx\n  ","Entry point address:", (unsigned long)elf_header.e_entry & 0xFFFFFFFFUL);
     close(fd);
 }
+
+/**
+ * elf_osabi - print ELF OS/ABI
+ * @buffer: the ELF header
+ */
 void elf_osabi(const unsigned char *buffer)
 {
 	const char *os_table[19] = {
@@ -147,4 +153,20 @@ void elf_osabi(const unsigned char *buffer)
 		printf("%s\n  ", os_table[(unsigned int) buffer[EI_OSABI]]);
 	else
 		printf("<unknown: %x>\n  ", buffer[EI_OSABI]);
+}
+
+/** get_elf_type_string - function to get a string representation of the 
+ * EFL file type
+ * @type: the value of the EFL type
+*/
+const char* get_elf_type_string(unsigned int type)
+{
+    switch (type) {
+        case ET_NONE: return "NONE (No file type)";
+        case ET_REL: return "REL (Relocatable file)";
+        case ET_EXEC: return "EXEC (Executable file)";
+        case ET_DYN: return "DYN (Shared object file)";
+        case ET_CORE: return "CORE (Core file)";
+        default: return "Unknown";
+    }
 }

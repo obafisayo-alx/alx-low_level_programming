@@ -109,12 +109,12 @@ void read_elf_file(const char *filename)
     }
     printf("\n  ");
     printf("%-34s ELF%d\n  ", "Class:", elf_header.e_ident[EI_CLASS] == ELFCLASS64 ? 64 : 32);
-    printf("%-34s 2's complement, %s\n  ","Data:", elf_header.e_ident[EI_DATA] == ELFDATA2LSB ? "Little-endian" : "Big-endian");
+    printf("%-34s 2's complement, %s\n  ","Data:", elf_header.e_ident[EI_DATA] == ELFDATA2LSB ? "Little endian" : "Big endian");
     printf("%-34s %d (current)\n  ","Version:", elf_header.e_ident[EI_VERSION]);
     elf_osabi(elf_header.e_ident);
     printf("%-34s %u\n  ", "ABI Version:", elf_header.e_ident[EI_ABIVERSION]);
     printf("%-34s %d\n  ", "Type:", elf_header.e_type);
-    printf("%-34s 0x%lx\n  ","Entry point address:", (unsigned long)elf_header.e_entry);
+    printf("%-34s 0x%08lx\n  ","Entry point address:", (unsigned long)elf_header.e_entry & 0xFFFFFFFFUL);
     close(fd);
 }
 void elf_osabi(const unsigned char *buffer)

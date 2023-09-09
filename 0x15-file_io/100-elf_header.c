@@ -88,6 +88,10 @@ int elf_file(const char *filename)
     return (0);
 }
 
+/**
+ * read_elf_file - this function reads the elf file
+ * @filename: name of file to be read
+*/
 void read_elf_file(const char *filename)
 {
     int i;

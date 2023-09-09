@@ -33,7 +33,7 @@ int main(int argc, char **argv)
         return (1);
     if (elf_file(argv[1]))
     {
-        printf("ELF Header:\n\t");
+        printf("ELF Header:\n  ");
         read_elf_file(argv[1]);
     }
     else
@@ -106,13 +106,13 @@ void read_elf_file(const char *filename)
     {
         printf("%02X ", elf_header.e_ident[i]);
     }
-    printf("\n");
-    printf("Class: %d-bit\n", elf_header.e_ident[EI_CLASS] == ELFCLASS64 ? 64 : 32);
-    printf("Data: %s\n", elf_header.e_ident[EI_DATA] == ELFDATA2LSB ? "Little-endian" : "Big-endian");
-    printf("Version: %d\n", elf_header.e_ident[EI_VERSION]);
-    printf("OS/ABI: %d\n", elf_header.e_ident[EI_OSABI]);
-    printf("ABI Version: %d\n", elf_header.e_ident[EI_ABIVERSION]);
-    printf("Type: %d\n", elf_header.e_type);
-    printf("Entry point address: 0x%lx\n", (unsigned long)elf_header.e_entry);
+    printf("\n  ");
+    printf("Class: ELF%d\n  ", elf_header.e_ident[EI_CLASS] == ELFCLASS64 ? 64 : 32);
+    printf("Data: 2's complement, %s\n  ", elf_header.e_ident[EI_DATA] == ELFDATA2LSB ? "Little-endian" : "Big-endian");
+    printf("Version: %d (current)\n  ", elf_header.e_ident[EI_VERSION]);
+    printf("OS/ABI: %d\n  ", elf_header.e_ident[EI_OSABI]);
+    printf("ABI Version: %d\n  ", elf_header.e_ident[EI_ABIVERSION]);
+    printf("Type: %d\n  ", elf_header.e_type);
+    printf("Entry point address: 0x%lx\n  ", (unsigned long)elf_header.e_entry);
     close(fd);
 }

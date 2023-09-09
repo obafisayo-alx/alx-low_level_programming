@@ -141,10 +141,10 @@ void elf_osabi(const unsigned char *buffer)
 		"Stratus Technologies OpenVOS"
 	};
 
-	printf("  %-34s ", "OS/ABI:");
+	printf("%-34s ", "OS/ABI:");
 
 	if (buffer[EI_OSABI] < 19)
-		printf("%s\n", os_table[(unsigned int) buffer[EI_OSABI]]);
+		printf("%s\n  ", os_table[(unsigned int) buffer[EI_OSABI]]);
 	else
-		printf("<unknown: %x>\n", buffer[EI_OSABI]);
+		printf("<unknown: %x>\n  ", buffer[EI_OSABI]);
 }

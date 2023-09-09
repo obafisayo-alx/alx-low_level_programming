@@ -9,6 +9,7 @@
 
 int elf_file(const char *filename);
 void read_elf_file(const char *filename);
+void elf_osabi(const unsigned char *buffer);
 
 /**
  * print_err - This function is used to print an error message
@@ -101,18 +102,49 @@ void read_elf_file(const char *filename)
         close(fd);
         print_err(filename);
     }
-    printf("Magic:");
+    printf("Magic:   ");
     for (i = 0; i < EI_NIDENT; i++)
     {
         printf("%02X ", elf_header.e_ident[i]);
     }
     printf("\n  ");
-    printf("Class: ELF%d\n  ", elf_header.e_ident[EI_CLASS] == ELFCLASS64 ? 64 : 32);
-    printf("Data: 2's complement, %s\n  ", elf_header.e_ident[EI_DATA] == ELFDATA2LSB ? "Little-endian" : "Big-endian");
-    printf("Version: %d (current)\n  ", elf_header.e_ident[EI_VERSION]);
-    printf("OS/ABI: %d\n  ", elf_header.e_ident[EI_OSABI]);
-    printf("ABI Version: %d\n  ", elf_header.e_ident[EI_ABIVERSION]);
-    printf("Type: %d\n  ", elf_header.e_type);
-    printf("Entry point address: 0x%lx\n  ", (unsigned long)elf_header.e_entry);
+    printf("%-34s ELF%d\n  ", "Class:", elf_header.e_ident[EI_CLASS] == ELFCLASS64 ? 64 : 32);
+    printf("%-34s 2's complement, %s\n  ","Data:", elf_header.e_ident[EI_DATA] == ELFDATA2LSB ? "Little-endian" : "Big-endian");
+    printf("%-34s %d (current)\n  ","Version:", elf_header.e_ident[EI_VERSION]);
+    elf_osabi(elf_header.e_ident);
+    printf("%-34s %u\n  ", "ABI Version:", elf_header.e_ident[EI_ABIVERSION]);
+    printf("%-34s %d\n  ", "Type:", elf_header.e_type);
+    printf("%-34s 0x%lx\n  ","Entry point address:", (unsigned long)elf_header.e_entry);
     close(fd);
+}
+void elf_osabi(const unsigned char *buffer)
+{
+	const char *os_table[19] = {
+		"UNIX - System V",
+		"UNIX - HP-UX",
+		"UNIX - NetBSD",
+		"UNIX - GNU",
+		"<unknown: 4>",
+		"<unknown: 5>",
+		"UNIX - Solaris",
+		"UNIX - AIX",
+		"UNIX - IRIX",
+		"UNIX - FreeBSD",
+		"UNIX - Tru64",
+		"Novell - Modesto",
+		"UNIX - OpenBSD",
+		"VMS - OpenVMS",
+		"HP - Non-Stop Kernel",
+		"AROS",
+		"FenixOS",
+		"Nuxi CloudABI",
+		"Stratus Technologies OpenVOS"
+	};
+
+	printf("  %-34s ", "OS/ABI:");
+
+	if (buffer[EI_OSABI] < 19)
+		printf("%s\n", os_table[(unsigned int) buffer[EI_OSABI]]);
+	else
+		printf("<unknown: %x>\n", buffer[EI_OSABI]);
 }

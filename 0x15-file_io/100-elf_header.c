@@ -48,10 +48,11 @@ int main(int argc, char **argv)
  */
 int elf_file(const char *filename)
 {
+    ssize_t byt_r;
+    char magic_bytes[4];
     int fd = open(filename, O_RDONLY);
     if (fd == -1)
         print_err(filename);
-    char magic_bytes[4];
     off_t origin_post;
 
     origin_post = lseek(fd, 0, SEEK_CUR);
@@ -65,7 +66,7 @@ int elf_file(const char *filename)
         close(fd);
         print_err(filename);
     }
-    ssize_t byt_r = read(fd, magic_bytes, sizeof(magic_bytes));
+    byt_r = read(fd, magic_bytes, sizeof(magic_bytes));
     if (byt_r != sizeof(magic_bytes))
     {
         close(fd);
@@ -87,12 +88,12 @@ int elf_file(const char *filename)
 
 void read_elf_file(const char *filename)
 {
+    int i;
+    Elf64_Ehdr elf_header;
+
     int fd = open(filename, O_RDONLY);
     if (fd == -1)
         print_err(filename);
-
-    Elf64_Ehdr elf_header;
-
     ssize_t byt_r = read(fd, &elf_header, sizeof(elf_header));
     if (byt_r != sizeof(elf_header))
     {
@@ -106,8 +107,6 @@ void read_elf_file(const char *filename)
         return;
     }
     printf("Magic:");
-    int i;
-
     for (i = 0; i < EI_NIDENT; i++)
     {
         printf("%02X ", elf_header.e_ident[i]);

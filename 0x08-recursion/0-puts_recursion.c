@@ -6,8 +6,6 @@ void print_char(char c)
 }
 void _puts_recursion(char *s)
 {
-    int i = 0;
-
     if (*s != '\0')
     {
         print_char(*s);

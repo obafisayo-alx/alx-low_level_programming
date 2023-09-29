@@ -7,5 +7,6 @@ void _print_rev_recursion(char *s);
 void _putchar(char c);
 int _strlen_recursion(char *s);
 int factorial(int n);
+int _sqrt_recursion(int n);
 
 #endif /**_MAIN_H_*/

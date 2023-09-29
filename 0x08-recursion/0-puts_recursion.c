@@ -4,7 +4,7 @@
  * print_char - This is the function that is used to print each character.
  * @c: This is the characer to be printed.
  */
-void print_char(char c)
+void _putchar(char c)
 {
 	write(1, &c, 1);
 }
@@ -17,8 +17,8 @@ void _puts_recursion(char *s)
 {
 	if (*s != '\0')
 	{
-		print_char(*s);
+		_putchar(*s);
 		_puts_recursion(s + 1);
 	} else
-		print_char('\n');
+		_putchar('\n');
 }

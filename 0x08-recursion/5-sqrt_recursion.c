@@ -22,6 +22,7 @@ int _sqrt_recursion(int n)
  * _sqrt_helper - This helps to determine the value of the sqrt
  * @n: This is still the number to be handled.
  * @guess: This is the determinant.
+ * Return: This is still the same return value.
 */
 int _sqrt_helper(int n, int guess)
 {

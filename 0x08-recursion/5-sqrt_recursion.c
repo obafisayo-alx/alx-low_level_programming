@@ -33,8 +33,6 @@ int _sqrt_helper(int n, int guess)
 	} else if (guess * guess < n)
 	{
 		return (_sqrt_helper(n, guess + 1));
-	} else if (guess * guess > n)
-	{
-		return (_sqrt_helper(n, guess - 1));
 	}
+	return (_sqrt_helper(n, guess - 1));
 }

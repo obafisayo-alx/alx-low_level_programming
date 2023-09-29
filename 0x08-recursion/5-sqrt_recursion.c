@@ -23,7 +23,7 @@ int _sqrt_recursion(int n)
  * @n: This is still the number to be handled.
  * @guess: This is the determinant.
 */
-_sqrt_helper(int n, int guess)
+int _sqrt_helper(int n, int guess)
 {
     if (guess * guess == n)
     {

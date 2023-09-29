@@ -1,5 +1,6 @@
 #include "main.h"
 
+int _sqrt_helper(int n, int guess);
 /**
  * _sqrt_recursion - This returns the square root of number.
  * @n: This is the number to be handled.

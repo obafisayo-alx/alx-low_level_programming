@@ -8,9 +8,9 @@
 */
 int main(int argc, char *av[])
 {
-    if (av[0])
-    {
-        printf("%d\n", argc - 1);
-    }
-    return (0);
+	if (av[0])
+	{
+		printf("%d\n", argc - 1);
+	}
+	return (0);
 }

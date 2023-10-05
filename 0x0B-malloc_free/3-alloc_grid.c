@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * alloc-grid - this is the function
+ * alloc_grid - this is the function
  * @width: the width
  * @height: the height
  * Return: the return value;

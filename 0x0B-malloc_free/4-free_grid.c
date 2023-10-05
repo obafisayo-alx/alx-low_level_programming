@@ -1,21 +1,18 @@
 #include "main.h"
 
 /**
- * free_grid - Free memory allocated to a previoiusly created 2D array
- * @grid: The 2D array to free memory from
- * @height: The height of the 2D array
- *
- * Return: Nothing
- */
-void free_grid(int **grid, int height)
-{
+ * free_grid - This function is used to free a two dimensional array
+ * @grid: This is the grid to be freed
+ * @height: This is the height of the grid
+ * Return: There is no return value.
+width*/
+ void free_grid(int **grid, int height)
+ {
 	int i;
 
-	i = 0;
-	while (i < height)
+	for (i = 0; i <= height; i++)
 	{
 		free(grid[i]);
-		i++;
 	}
 	free(grid);
-}
+ }

@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * alloc-grid - this is the function
+ * @width: the width
+ * @height: the height
+ * Return: the return value;
+*/
 int **alloc_grid(int width, int height)
 {
     int **grid;

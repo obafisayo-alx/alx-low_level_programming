@@ -1,18 +1,16 @@
 #include "main.h"
-
 /**
-* malloc_checked - This is used to create a malloc
-* @b: This is the nmemb of memory to be created
-* Return: This returns a pointer
-*/
-void* malloc_checked(unsigned int b)
+ * malloc_checked - Entry Point
+ * @b: input amount
+ * Return: pointer to new mem
+ */
+void *malloc_checked(unsigned int b)
 {
-	char *ptr;
+	void *n;
 
-	ptr = malloc(sizeof(char) * b);
-	if (ptr == NULL)
-	{
+	n = malloc(b);
+
+	if (n == NULL)
 		exit(98);
-	}
-	return (ptr);
+	return (n);
 }

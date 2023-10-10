@@ -1,5 +1,11 @@
-#ifndef _MAIN_H_
-#define _MAIN_H_
 #include <stdio.h>
-printf("%s\n", ___FILE__);
-#endif _MAIN_H_
+
+/**
+ * main - entry point
+ * Return: returns 0
+ */
+int main(void)
+{
+	printf("%s\n", __FILE__);
+	return (0);
+}

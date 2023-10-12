@@ -41,20 +41,31 @@ char *_strdup(char *str)
 */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-    dog_t *p;
+    dog_t *p = malloc(sizeof(dog_t));
+    char *n_name, *n_owner;
 
-    p = malloc(sizeof(dog_t));
+    n_name = _strdup(name);
+    n_owner = _strdup(owner);
     if (p == NULL)
         return (NULL);
-    p->name = _strdup(name);
-    p->owner = _strdup(owner);
-    if (p->name == NULL || p->owner == NULL)
+    p->name = n_name;
+    p->owner = n_owner;
+    if (n_name == NULL || n_owner == NULL)
     {
-        free(p->name);
-        free(p->owner);
+        free(n_name);
+        free(n_owner);
         free(p);
         return NULL;
     }
     p->age = age;
     return (p);
+}
+
+int main(void)
+{
+    dog_t *my_dog;
+
+    my_dog = new_dog("Poppy", 3.5, "Bob");
+    printf("My name is %s, and I am %.1f :) - Woof!\n", my_dog->name, my_dog->age);
+    return (0);
 }

@@ -1,63 +1,54 @@
-#include "dog.h"
 #include <stdlib.h>
-#include <stdio.h>
+#include "dog.h"
 
 /**
- * _strdup - Return pointer to a new string that duplicates given string,
- * allocate mem w/ malloc
- * @str: String to duplicate
+ * new_dog - create and initialize `dog_t' type struct
+ * @name: name of dog
+ * @age: age of dog
+ * @owner: owner of dog
  *
- * Return: Pointer to new string, NULL if failed to make memory
+ * Return: pointer to `dog_t', or NULL if fails to allocate memory
  */
-char *_strdup(char *str)
-{
-	char *nstr;
-	unsigned int i, len;
-
-	if (str == NULL)
-		return (NULL);
-	i = len = 0;
-	while (str[len] != '\0')
-	{
-		len++;
-	}
-	len++;
-	nstr = malloc(len * sizeof(*str));
-	if (nstr == NULL)
-		return (NULL);
-	while (i <= len)
-	{
-		nstr[i] = str[i];
-		i++;
-	}
-	return (nstr);
-}
-
-/**
- * new_dog - This function creates a new dog
- * @name: This is the name of the dog
- * @age: This is the age of the dog
- * @owner: This is the owner of the dog
- * Return: This is a pointer to the newly created dog
-*/
 dog_t *new_dog(char *name, float age, char *owner)
 {
-    dog_t *p = malloc(sizeof(dog_t));
-    char *n_name, *n_owner;
+	dog_t *dog = malloc(sizeof(dog_t));
+	char *new_name, *new_owner;
+	int i;
 
-    n_name = _strdup(name);
-    n_owner = _strdup(owner);
-    if (p == NULL)
-        return (NULL);
-    p->name = n_name;
-    p->owner = n_owner;
-    if (n_name == NULL || n_owner == NULL)
-    {
-        free(n_name);
-        free(n_owner);
-        free(p);
-        return NULL;
-    }
-    p->age = age;
-    return (p);
+	if (dog == NULL)
+		return (NULL);
+/* copy `name' to `new_name' */
+	for (i = 0; name[i]; ++i)
+		;
+	new_name = malloc(sizeof(char) * (i + 1));
+	if (new_name == NULL)
+	{
+		free(dog);
+		return (NULL);
+	}
+	while (i >= 0)
+	{
+		new_name[i] = name[i];
+		--i;
+	}
+/* copy `owner' to `new_owner' */
+	for (i = 0; owner[i]; ++i)
+		;
+	new_owner = malloc(sizeof(char) * (i + 1));
+	if (new_owner == NULL)
+	{
+		free(new_name);
+		free(dog);
+		return (NULL);
+	}
+	while (i >= 0)
+	{
+		new_owner[i] = owner[i];
+		--i;
+	}
+/* initialize `dog' */
+	dog->name = new_name;
+	dog->age = age;
+	dog->owner = new_owner;
+	return (dog);
 }

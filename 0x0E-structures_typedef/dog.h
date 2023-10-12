@@ -11,6 +11,12 @@
  * 
  * Description: This struct just holds the little details about my dog
 */
+
+/**
+ * dog_t - Typedef for struct dog_t
+*/
+typedef struct dog dog_t;
+
 struct dog
 {
     char *name;

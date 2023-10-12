@@ -2,7 +2,7 @@
 
 /**
  * print_dog - This is print dog function
- * @d: a pointe to a struct dog
+ * @d: a points to a struct dog
  * Return: void
 */
 void print_dog(struct dog *d)

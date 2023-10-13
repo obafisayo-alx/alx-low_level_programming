@@ -12,30 +12,5 @@
  */
 int main(int argc, char *argv[])
 {
-	int num1, num2, result;
-	int (*op_func)(int, int);
-	char *operator;
-
-	if (argc != 4)
-	{
-		puts("Error");
-		exit(98);
-	}
-	operator = argv[2];
-	num1 = atoi(argv[1]);
-	num2 = atoi(argv[3]);
-	if ((operator[0] == '/' || operator[0] == '%') && num2 == 0)
-	{
-		puts("Error");
-		exit(100);
-	}
-	op_func = get_op_func(operator);
-	if (op_func == NULL)
-	{
-		puts("Error");
-		exit(99);
-	}
-	result = op_func(num1, num2);
-	printf("%d\n", result);
-	exit(EXIT_SUCCESS);
+	
 }

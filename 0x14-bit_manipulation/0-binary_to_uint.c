@@ -1,21 +1,21 @@
 #include "main.h"
 
 /**
- * binary_to_decimalnt - converts a binary number to an
+ * binary_to_uint - converts a binary number to an
  * unsigned int.
  * @b: binary.
  *
  * Return: unsigned int.
  */
-unsigned int binary_to_decimalnt(const char *b)
+unsigned int binary_to_uint(const char *b)
 {
-	unsigned int decimal;
+	unsigned int ui;
 	int length, base_two;
 
 	if (!b)
 		return (0);
 
-	decimal = 0;
+	ui = 0;
 
 	for (length = 0; b[length] != '\0'; length++)
 		;
@@ -29,9 +29,9 @@ unsigned int binary_to_decimalnt(const char *b)
 
 		if (b[length] & 1)
 		{
-			decimal += base_two;
+			ui += base_two;
 		}
 	}
 
-	return (decimal);
+	return (ui);
 }

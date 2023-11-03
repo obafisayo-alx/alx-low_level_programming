@@ -38,15 +38,14 @@ ssize_t read_textfile(const char *filename, size_t letters)
 		close(fd);
 		return (0);
 	}
+	close(fd);
 	w = write(STDOUT_FILENO, buff, letters);
 	if (w == -1)
 	{
 		free(buff);
-		close(fd);
 		return (0);
 	}
 	if (w != r)
 		return (0);
-	close(fd);
 	return (r);
 }

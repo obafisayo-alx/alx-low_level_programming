@@ -1,44 +1,50 @@
 #include "lists.h"
 
 /**
- * insert_dnodeint_at_index - inserts a node at a particular index
- * @h: pointer to the head of the node
- * @idx: index to add new node
- * @n: new integer to be added
- * Return: Returns the new node
-*/
+ * insert_dnodeint_at_index - insert new node in double linked list at
+ * index `index'.
+ * @h: double pointer to list
+ * @idx: index at which to insert new node
+ * @n: value with which to initialize new node
+ *
+ * Return: pointer to new node, or NULL if it could not be created
+ */
 dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	dlistint_t *current, *new_node;
-	size_t i;
+	dlistint_t *new, *cur = *h;
+	unsigned int cur_idx;
 
-	if (*h == NULL)
+	if (h == NULL)
 		return (NULL);
-	new_node = malloc(sizeof(dlistint_t));
-	if (new_node == NULL)
-		return (NULL);
-	new_node->n = n;
 	if (idx == 0)
 	{
-		new_node->next = *h;
-		new_node->prev = NULL;
+		new = malloc(sizeof(dlistint_t));
+		if (new == NULL)
+			return (NULL);
+		new->n = n;
+		new->prev = NULL;
+		new->next = *h;
 		if (*h != NULL)
-			(*h)->prev = new_node;
-		*h = new_node;
-		return (new_node);
+			(*h)->prev = new;
+		*h = new;
+		return (new);
 	}
-	current = *h;
-	for (i = 0; i < idx && current != NULL; i++)
-		current = current->next;
-	if (i < idx)
+	for (cur_idx = 0; cur != NULL; cur_idx++)
 	{
-		free(new_node);
-		return (NULL);
+		if (cur_idx == idx - 1)
+		{
+			new = malloc(sizeof(dlistint_t));
+			if (new == NULL)
+				return (NULL);
+			new->n = n;
+			new->next = cur->next;
+			new->prev = cur;
+			if (cur->next != NULL)
+				cur->next->prev = new;
+			cur->next = new;
+			return (new);
+		}
+		cur = cur->next;
 	}
-	new_node->next = current;
-	new_node->prev = current->prev;
-	if (current->prev != NULL)
-		current->prev->next = new_node;
-	current->prev = new_node;
-	return (new_node);
+	return (NULL);
 }

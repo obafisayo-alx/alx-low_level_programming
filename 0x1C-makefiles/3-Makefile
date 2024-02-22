@@ -44,3 +44,4 @@ re: fclean all
 .SUFFIXES:
 
 # Declare phony rules (they don't correspond to actual files)
+.PHONY: all clean oclean fclean re
